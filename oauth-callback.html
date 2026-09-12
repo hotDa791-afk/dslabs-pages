@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+  <html lang="en">
+  <head>
+  <meta charset="UTF-8">
+  <title>TikTok OAuth Callback - DsLabs</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root{ --bg:#faf9f6; --fg:#1a1a1a; --muted:#5a5a5a; --accent:#0f6b4c; --card:#ffffff; }
+    @media (prefers-color-scheme: dark){
+      :root:not([data-theme="light"]){ --bg:#15181a; --fg:#eaeaea; --muted:#a0a0a0; --accent:#3ecf8e; --card:#1e2225; }
+  }
+    :root[data-theme="dark"]{ --bg:#15181a; --fg:#eaeaea; --muted:#a0a0a0; --accent:#3ecf8e; --card:#1e2225; }
+    *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--fg);font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,monospace;line-height:1.6;}
+  .wrap{max-width:640px;margin:0 auto;padding:48px 24px;}
+  h1{font-size:1.4rem;}
+      .card{background:var(--card);border-radius:12px;padding:20px 24px;box-shadow:0 1px 3px rgba(0,0,0,0.08);margin-top:1.5em;word-break:break-all;}
+  .label{color:var(--muted);font-size:0.85rem;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.3em;}
+  .value{font-size:1rem;margin-bottom:1.2em;}
+  .value:last-child{margin-bottom:0;}
+  button{background:var(--accent);color:#fff;border:none;border-radius:8px;padding:8px 14px;font-size:0.85rem;cursor:pointer;}
+  </style>
+    </head>
+    <body>
+<div class="wrap">
+      <h1>TikTok OAuth Callback</h1>
+  <p style="color:var(--muted)">Development helper page. Shows what TikTok sent back after login, so it can be copied manually while the real backend is being built.</p>
+      <div class="card" id="out">Reading URL parameters...</div>
+    </div>
+    <script>
+      const params = new URLSearchParams(window.location.search);
+      const out = document.getElementById('out');
+      const entries = [...params.entries()];
+  if (entries.length === 0) {
+    out.textContent = "No parameters received. Open this page via TikTok's OAuth redirect to see the code here.";
+    } else {
+        out.innerHTML = entries.map(([k, v]) => `
+      <div class="label">${k}</div>
+          <div class="value">${v} <button onclick="navigator.clipboard.writeText('${v}')">Copy</button></div>
+    `).join('');
+    }
+    </script>
+    </body>
+    </html>
